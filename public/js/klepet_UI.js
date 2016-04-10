@@ -14,8 +14,11 @@ function divElementHtmlTekst(sporocilo) {
 
 function procesirajVnosUporabnika(klepetApp, socket) {
   var sporocilo = $('#poslji-sporocilo').val();
-  sporocilo = dodajSmeske(sporocilo);
   var sistemskoSporocilo;
+  
+  if (sporocilo.match(/[a-z\-_0-9\/\:\.]*\.jpg|jpeg|png|gif/g)) {
+    var slike = '<div>' + dodajSlike(sporocilo) + '</div>';
+  }
 
   if (sporocilo.charAt(0) == '/') {
     sistemskoSporocilo = klepetApp.procesirajUkaz(sporocilo);
@@ -24,10 +27,15 @@ function procesirajVnosUporabnika(klepetApp, socket) {
     }
   } else {
     sporocilo = filtirirajVulgarneBesede(sporocilo);
+    sporocilo = dodajSmeske(sporocilo);
     klepetApp.posljiSporocilo(trenutniKanal, sporocilo);
     $('#sporocila').append(divElementEnostavniTekst(sporocilo));
     $('#sporocila').scrollTop($('#sporocila').prop('scrollHeight'));
   }
+
+  klepetApp.posljiSlike(trenutniKanal, slike);
+  $('#sporocila').append(slike);
+  $('#sporocila').scrollTop($('#sporocila').prop('scrollHeight'));
 
   $('#poslji-sporocilo').val('');
 }
@@ -54,6 +62,11 @@ function filtirirajVulgarneBesede(vhod) {
 
 $(document).ready(function() {
   var klepetApp = new Klepet(socket);
+  
+  socket.on('slike', function(rezultat) {
+    console.log("Otherside")
+    $('#sporocila').append(rezultat.besedilo);
+  });
 
   socket.on('vzdevekSpremembaOdgovor', function(rezultat) {
     var sporocilo;
@@ -74,6 +87,7 @@ $(document).ready(function() {
   });
 
   socket.on('sporocilo', function (sporocilo) {
+    console.log("sporocilo");
     var novElement = divElementEnostavniTekst(sporocilo.besedilo);
     $('#sporocila').append(novElement);
   });
@@ -116,6 +130,18 @@ $(document).ready(function() {
   
 });
 
+function dodajSlike(vhodnoBesedilo) {
+  var exten = /https?:.+\.jpg|png|gif/g;
+  var link = exten.exec(vhodnoBesedilo);
+  var pic = '';
+   while(link != null) {
+    pic += "<img hspace='20' width='200' src='" + link[0] + "'> ";
+    link = exten.exec(vhodnoBesedilo);
+    }
+  
+  return pic;
+}
+
 function dodajSmeske(vhodnoBesedilo) {
   var preslikovalnaTabela = {
     ";)": "wink.png",
@@ -131,3 +157,4 @@ function dodajSmeske(vhodnoBesedilo) {
   }
   return vhodnoBesedilo;
 }
+
