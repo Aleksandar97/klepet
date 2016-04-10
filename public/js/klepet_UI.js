@@ -99,6 +99,12 @@ $(document).ready(function() {
     for (var i=0; i < uporabniki.length; i++) {
       $('#seznam-uporabnikov').append(divElementEnostavniTekst(uporabniki[i]));
     }
+    
+     $('#seznam-uporabnikov div').click(function() {
+    var msgimput = $('#poslji-sporocilo');
+    msgimput.val('/zasebno "' + $(this).text() +'" ');
+    msgimput.focus();
+    });
   });
 
   setInterval(function() {
@@ -115,6 +121,17 @@ $(document).ready(function() {
   
   
 });
+
+function addPic(vhodnoBesedilo) {
+  var format = /https?:.+\.jpg|png|gif/;
+  var pic = format.exec(vhodnoBesedilo);
+  if (pic != null) {
+    pic.forEach(function(zadetek) {
+      vhodnoBesedilo += "<br><img hspace='20' width='200' src='" + pic + "'>";
+    });
+  }
+  return vhodnoBesedilo;
+}
 
 function dodajSmeske(vhodnoBesedilo) {
   var preslikovalnaTabela = {
