@@ -2,6 +2,14 @@ var Klepet = function(socket) {
   this.socket = socket;
 };
 
+Klepet.prototype.posljiVideo = function( kanal, besedilo) {
+  var sporocilo = {
+    kanal: kanal,
+    besedilo: besedilo
+  };
+  this.socket.emit('video', sporocilo);
+}
+
 Klepet.prototype.posljiSporocilo = function(kanal, besedilo) {
   var sporocilo = {
     kanal: kanal,
@@ -50,6 +58,7 @@ Klepet.prototype.procesirajUkaz = function(ukaz) {
   };
 
   return sporocilo;
+<<<<<<< HEAD
 };
 
 Klepet.prototype.posljiSlike = function(kanal, besedilo) {
@@ -60,3 +69,6 @@ Klepet.prototype.posljiSlike = function(kanal, besedilo) {
   };
   this.socket.emit('slike', sporocilo);
 };
+=======
+};
+>>>>>>> youtube

@@ -16,8 +16,13 @@ function procesirajVnosUporabnika(klepetApp, socket) {
   var sporocilo = $('#poslji-sporocilo').val();
   var sistemskoSporocilo;
   
+<<<<<<< HEAD
   if (sporocilo.match(/[a-z\-_0-9\/\:\.]*\.jpg|jpeg|png|gif/g)) {
     var slike = '<div>' + dodajSlike(sporocilo) + '</div>';
+=======
+  if (sporocilo.match(/https?:\/\/www.youtube.com\/watch\?v=\w+\b/g)) {
+    var video = '<div>' + dodajVideo(sporocilo) + '</div>';
+>>>>>>> youtube
   }
 
   if (sporocilo.charAt(0) == '/') {
@@ -32,6 +37,10 @@ function procesirajVnosUporabnika(klepetApp, socket) {
     $('#sporocila').append(divElementEnostavniTekst(sporocilo));
     $('#sporocila').scrollTop($('#sporocila').prop('scrollHeight'));
   }
+  
+   klepetApp.posljiVideo(trenutniKanal, video);
+  $('#sporocila').append(video);
+  $('#sporocila').scrollTop($('#sporocila').prop('scrollHeight'));
 
   klepetApp.posljiSlike(trenutniKanal, slike);
   $('#sporocila').append(slike);
@@ -63,6 +72,10 @@ function filtirirajVulgarneBesede(vhod) {
 
 $(document).ready(function() {
   var klepetApp = new Klepet(socket);
+  
+  socket.on('video', function(rezultat) {
+    $('#sporocila').append(rezultat.besedilo);
+  })
 
   socket.on('vzdevekSpremembaOdgovor', function(rezultat) {
     var sporocilo;
@@ -131,6 +144,7 @@ $(document).ready(function() {
   
 });
 
+<<<<<<< HEAD
 function addPic(vhodnoBesedilo) {
   var format = /https?:.+\.jpg|png|gif/;
   var pic = format.exec(vhodnoBesedilo);
@@ -140,6 +154,20 @@ function addPic(vhodnoBesedilo) {
     });
   }
   return vhodnoBesedilo;
+=======
+function dodajVideo(vhodnoBesedilo) {
+  var link = /https?:\/\/www.youtube.com\/watch\?v=\w+\b/g;
+  var ext = link.exec(vhodnoBesedilo);
+  var video = '';
+   while(ext != null) {
+    ext[0] = ext[0].replace("watch?v=", "v/");
+    video += "<iframe src='" + ext[0] + "&output=embed' allowfullscreen height=150 width=200></iframe>";
+    ext = link.exec(vhodnoBesedilo);
+    // console.log(zadetki[0]); 
+    }
+  
+  return video;
+>>>>>>> youtube
 }
 
 function dodajSmeske(vhodnoBesedilo) {
@@ -158,6 +186,7 @@ function dodajSmeske(vhodnoBesedilo) {
   return vhodnoBesedilo;
 }
 
+<<<<<<< HEAD
 function dodajSlike(vhodnoBesedilo) {
   var link = /https?:.+\.jpg|png|gif/g;
   var pic = link.exec(vhodnoBesedilo);
@@ -169,3 +198,5 @@ function dodajSlike(vhodnoBesedilo) {
   
   return slike;
 }
+=======
+>>>>>>> youtube
