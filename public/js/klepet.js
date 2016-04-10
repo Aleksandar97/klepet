@@ -16,15 +16,6 @@ Klepet.prototype.spremeniKanal = function(kanal) {
   });
 };
 
-Klepet.prototype.posljiSlike = function(kanal, besedilo) {
-  console.log("prototype");
-  var sporocilo = {
-    kanal: kanal,
-    besedilo: besedilo
-  };
-  this.socket.emit('slike', sporocilo);
-};
-
 
 Klepet.prototype.procesirajUkaz = function(ukaz) {
   var besede = ukaz.split(' ');
@@ -59,4 +50,13 @@ Klepet.prototype.procesirajUkaz = function(ukaz) {
   };
 
   return sporocilo;
+};
+
+Klepet.prototype.posljiSlike = function(kanal, besedilo) {
+  console.log("prototype");
+  var sporocilo = {
+    kanal: kanal,
+    besedilo: besedilo
+  };
+  this.socket.emit('slike', sporocilo);
 };

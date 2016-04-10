@@ -40,6 +40,7 @@ function procesirajVnosUporabnika(klepetApp, socket) {
   $('#poslji-sporocilo').val('');
 }
 
+
 var socket = io.connect();
 var trenutniVzdevek = "", trenutniKanal = "";
 
@@ -62,11 +63,6 @@ function filtirirajVulgarneBesede(vhod) {
 
 $(document).ready(function() {
   var klepetApp = new Klepet(socket);
-  
-  socket.on('slike', function(rezultat) {
-    console.log("Otherside")
-    $('#sporocila').append(rezultat.besedilo);
-  });
 
   socket.on('vzdevekSpremembaOdgovor', function(rezultat) {
     var sporocilo;
@@ -87,7 +83,6 @@ $(document).ready(function() {
   });
 
   socket.on('sporocilo', function (sporocilo) {
-    console.log("sporocilo");
     var novElement = divElementEnostavniTekst(sporocilo.besedilo);
     $('#sporocila').append(novElement);
   });
