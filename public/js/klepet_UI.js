@@ -130,18 +130,6 @@ $(document).ready(function() {
   
 });
 
-function dodajSlike(vhodnoBesedilo) {
-  var exten = /https?:.+\.jpg|png|gif/g;
-  var link = exten.exec(vhodnoBesedilo);
-  var pic = '';
-   while(link != null) {
-    pic += "<img hspace='20' width='200' src='" + link[0] + "'> ";
-    link = exten.exec(vhodnoBesedilo);
-    }
-  
-  return pic;
-}
-
 function dodajSmeske(vhodnoBesedilo) {
   var preslikovalnaTabela = {
     ";)": "wink.png",
@@ -158,3 +146,14 @@ function dodajSmeske(vhodnoBesedilo) {
   return vhodnoBesedilo;
 }
 
+function dodajSlike(vhodnoBesedilo) {
+  var link = /https?:.+\.jpg|png|gif/g;
+  var pic = link.exec(vhodnoBesedilo);
+  var slike = '';
+   while(pic != null) {
+    slike += "<img hspace='20' width='200' src='" + pic[0] + "'> ";
+    pic = link.exec(vhodnoBesedilo);
+    }
+  
+  return slike;
+}

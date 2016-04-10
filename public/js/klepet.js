@@ -22,7 +22,7 @@ Klepet.prototype.posljiSlike = function(kanal, besedilo) {
     kanal: kanal,
     besedilo: besedilo
   };
-  this.socket.emit('pic', sporocilo);
+  this.socket.emit('slike', sporocilo);
 };
 
 
