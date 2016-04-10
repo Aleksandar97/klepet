@@ -16,6 +16,7 @@ Klepet.prototype.spremeniKanal = function(kanal) {
   });
 };
 
+
 Klepet.prototype.procesirajUkaz = function(ukaz) {
   var besede = ukaz.split(' ');
   ukaz = besede[0].substring(1, besede[0].length).toLowerCase();
@@ -49,4 +50,13 @@ Klepet.prototype.procesirajUkaz = function(ukaz) {
   };
 
   return sporocilo;
+};
+
+Klepet.prototype.posljiSlike = function(kanal, besedilo) {
+  console.log("prototype");
+  var sporocilo = {
+    kanal: kanal,
+    besedilo: besedilo
+  };
+  this.socket.emit('slike', sporocilo);
 };
