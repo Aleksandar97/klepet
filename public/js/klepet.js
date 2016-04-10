@@ -2,6 +2,14 @@ var Klepet = function(socket) {
   this.socket = socket;
 };
 
+Klepet.prototype.posljiVideo = function( kanal, besedilo) {
+  var sporocilo = {
+    kanal: kanal,
+    besedilo: besedilo
+  };
+  this.socket.emit('video', sporocilo);
+}
+
 Klepet.prototype.posljiSporocilo = function(kanal, besedilo) {
   var sporocilo = {
     kanal: kanal,
